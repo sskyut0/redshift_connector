@@ -2,9 +2,11 @@ require 'active_record'
 require 'yaml'
 require 'logger'
 
+config = {}
 YAML.load_file("#{__dir__}/database.yml").each do |name, ent|
-  ActiveRecord::Base.configurations[name] = ent
+  config[name] = ent
 end
+ActiveRecord::Base.configurations = config
 
 class BaseConn < ActiveRecord::Base
   establish_connection :mysql
